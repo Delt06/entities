@@ -1,0 +1,18 @@
+﻿{
+  "name": "com.deltation.entities",
+  "version": "1.0.0",
+  "displayName": "Entities",
+  "description": "A library that allows to query components efficiently.",
+  "unity": "2019.4",
+
+  "keywords": [
+    "Components",
+    "Caching"
+  ],
+
+  "author": {
+    "name": "Vladislav Kantaev",
+    "email": "vvkantaev@yandex.ru",
+    "url": "https://delt06.github.io/page/"
+  }
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Entities.Tests.Runtime",
+    "references": [
+        "GUID:48e1ecdb4de93c347b7694ffe5eaf7d5",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
