@@ -183,5 +183,24 @@ namespace DELTation.Entities.Tests.Runtime
 
 			Assert.That(returnedColliders, Is.EquivalentTo(colliders.Skip(1)));
 		}
+
+		[Test]
+		public void CachedEntityWithComponent_TryGet_ReturnsTrueAndCorrectComponent()
+		{
+			var rigidbody = CachedEntity.GameObject.AddComponent<Rigidbody>();
+
+			var found = CachedEntity.TryGet<Rigidbody>(out var returnedRigidbody);
+			
+			Assert.That(found);
+			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
+		}
+		
+		[Test]
+		public void CachedEntityWithoutComponent_TryGet_ReturnsFalse()
+		{
+			var found = CachedEntity.TryGet<Rigidbody>(out _);
+			
+			Assert.That(found, Is.False);
+		}
 	}
 }

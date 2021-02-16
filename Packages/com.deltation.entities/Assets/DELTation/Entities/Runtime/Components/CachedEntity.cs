@@ -22,27 +22,39 @@ namespace DELTation.Entities.Components
 			set => _removeDestroyedComponents = value;
 		}
 
-		public override T Get<T>() => Get<T>(true);
+		public override bool TryGet<T>(out T component) => TryGet(out component, true);
 
-		private T Get<T>(bool lookUp) where T : class
+		private bool TryGet<T>(out T component, bool lookUp) where T : class
 		{
 			var type = typeof(T);
 			if (lookUp && _cache.TryGetValue(type, out var componentObject))
 			{
-				if (!RemoveDestroyedComponents) return (T) componentObject;
-				if (!IsDestroyed(componentObject)) return (T) componentObject;
+				component = (T) componentObject;
+				if (!RemoveDestroyedComponents) return true;
+				if (!IsDestroyed(componentObject)) return true;
 				
 				_cache.Remove(type);
-				return Get<T>(false);
+				return TryGet(out component);
 			}
 
 			componentObject = GetComponentInChildren<T>(_searchInInactiveChildren);
 			if ((Object) componentObject == null)
-				throw ComponentNotFoundException(type);
+			{
+				component = default;
+				return false;
+			}
 			
 			_cache[type] = componentObject;
+			component = (T) componentObject;
+			return true;
+		}
 
-			return (T) componentObject;
+		public override T Get<T>()
+		{
+			if (TryGet<T>(out var component))
+				return component;
+
+			throw ComponentNotFoundException(typeof(T));
 		}
 
 		private static bool IsDestroyed(object obj) => obj is Object unityObj && unityObj == null;
@@ -52,7 +64,7 @@ namespace DELTation.Entities.Components
 				$"There is no component of type {type} in {gameObject} or its children.");
 
 		public override T[] GetMany<T>() => GetMany<T>(true);
-		
+
 		private T[] GetMany<T>(bool lookUp) where T : class
 		{
 			var type = typeof(T);

@@ -6,6 +6,7 @@ namespace DELTation.Entities.Components
 	{
 		public GameObject GameObject => gameObject;
 
+		public abstract bool TryGet<T>(out T component) where T : class;
 		public abstract T Get<T>() where T : class;
 		public abstract T[] GetMany<T>() where T : class;
 	}
