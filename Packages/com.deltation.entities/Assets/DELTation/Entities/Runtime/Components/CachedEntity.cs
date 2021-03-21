@@ -37,14 +37,22 @@ namespace DELTation.Entities.Components
 				return TryGet(out component);
 			}
 
-			componentObject = GetComponentInChildren<T>(_searchInInactiveChildren);
-			if ((Object) componentObject == null)
+			if (lookUp && _tryGetChecked.Contains(type))
 			{
 				component = default;
 				return false;
 			}
+
+			componentObject = GetComponentInChildren<T>(_searchInInactiveChildren);
+			if ((Object) componentObject == null)
+			{
+				component = default;
+				_tryGetChecked.Add(type);
+				return false;
+			}
 			
 			_cache[type] = componentObject;
+			_tryGetChecked.Add(type);
 			component = (T) componentObject;
 			return true;
 		}
@@ -95,5 +103,6 @@ namespace DELTation.Entities.Components
 
 		private readonly IDictionary<Type, object> _cache = new Dictionary<Type, object>();
 		private readonly IDictionary<Type, object> _manyCache = new Dictionary<Type, object>();
+		private readonly ISet<Type> _tryGetChecked = new HashSet<Type>();
 	}
 }

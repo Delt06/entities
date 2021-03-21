@@ -1,6 +1,6 @@
 ﻿{
   "name": "com.deltation.entities",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "displayName": "Entities",
   "description": "A library that allows to query components efficiently.",
   "unity": "2019.4",
