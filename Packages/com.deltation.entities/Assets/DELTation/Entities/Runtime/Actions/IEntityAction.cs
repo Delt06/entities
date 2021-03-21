@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace DELTation.Entities
+namespace DELTation.Entities.Actions
 {
 	public interface IEntityAction
 	{

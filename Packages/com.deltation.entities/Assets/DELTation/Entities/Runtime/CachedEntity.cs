@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace DELTation.Entities.Components
+namespace DELTation.Entities
 {
 	public sealed class CachedEntity : EntityBase
 	{

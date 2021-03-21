@@ -1,5 +1,4 @@
-﻿using DELTation.Entities.Components;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime

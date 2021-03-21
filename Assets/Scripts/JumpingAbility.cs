@@ -1,5 +1,5 @@
 ﻿using DELTation.Entities;
-using DELTation.Entities.ScriptableObjects;
+using DELTation.Entities.Actions;
 using UnityEngine;
 
 [CreateAssetMenu]

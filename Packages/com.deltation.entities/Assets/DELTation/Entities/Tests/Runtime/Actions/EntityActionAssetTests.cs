@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 
-namespace DELTation.Entities.Tests.Runtime.ScriptableObjects
+namespace DELTation.Entities.Tests.Runtime.Actions
 {
 	[TestFixture]
 	internal class EntityActionAssetTests : CachedEntityTestsBase
@@ -17,7 +17,7 @@ namespace DELTation.Entities.Tests.Runtime.ScriptableObjects
 		public override void TearDown()
 		{
 			base.TearDown();
-			
+
 			if (_action)
 				Object.Destroy(_action);
 		}
@@ -32,8 +32,8 @@ namespace DELTation.Entities.Tests.Runtime.ScriptableObjects
 		public void Action_OnEntity_ExecutesOneTime()
 		{
 			_action.Invoke(CachedEntity);
-			
+
 			Assert.That(_action.Value, Is.EqualTo(1));
 		}
- 	}
+	}
 }

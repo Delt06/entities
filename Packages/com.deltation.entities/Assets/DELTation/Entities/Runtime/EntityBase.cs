@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DELTation.Entities.Components
+namespace DELTation.Entities
 {
 	public abstract class EntityBase : MonoBehaviour, IEntity
 	{

@@ -15,10 +15,10 @@ namespace DELTation.Entities.Tests.Runtime
 			var rigidbody = CachedEntity.GameObject.AddComponent<Rigidbody>();
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
-			
+
 			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
-		
+
 		[Test]
 		public void CachedEntity_GetNonExistingComponent_ThrowsException()
 		{
@@ -33,10 +33,10 @@ namespace DELTation.Entities.Tests.Runtime
 			var rigidbody = child.AddComponent<Rigidbody>();
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
-			
+
 			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
-		
+
 		[Test]
 		public void CachedEntityWithInactiveSearchEnabled_GetInactiveChildComponent_ReturnsTheComponent()
 		{
@@ -47,10 +47,10 @@ namespace DELTation.Entities.Tests.Runtime
 			CachedEntity.SearchInInactiveChildren = true;
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
-			
+
 			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
-		
+
 		[Test]
 		public void CachedEntityWithInactiveSearchDisabled_GetInactiveChildComponent_ThrowsException()
 		{
@@ -75,7 +75,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
 		}
-		
+
 		[UnityTest]
 		public IEnumerator CachedEntityWithoutDestroyedComponentsRemoval_GetDestroyedComponent_ReturnsNullObject()
 		{
@@ -98,7 +98,7 @@ namespace DELTation.Entities.Tests.Runtime
 				.ToArray();
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
-			
+
 			Assert.That(returnedColliders, Is.EquivalentTo(colliders));
 		}
 
@@ -114,10 +114,10 @@ namespace DELTation.Entities.Tests.Runtime
 			var allColliders = colliders1.Concat(colliders2).ToArray();
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
-			
+
 			Assert.That(returnedColliders, Is.EquivalentTo(allColliders));
 		}
-		
+
 		[Test]
 		public void CachedEntityWithInactiveSearchEnabled_GetManyInactiveLocalAndNonLocalComponents_ReturnsThemAll()
 		{
@@ -132,10 +132,10 @@ namespace DELTation.Entities.Tests.Runtime
 			child.SetActive(false);
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
-			
+
 			Assert.That(returnedColliders, Is.EquivalentTo(allColliders));
 		}
-		
+
 		[Test]
 		public void CachedEntityWithInactiveSearchDisabled_GetManyInactiveLocalAndNonLocalComponents_ReturnNone()
 		{
@@ -148,12 +148,13 @@ namespace DELTation.Entities.Tests.Runtime
 			child.SetActive(false);
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
-			
+
 			Assert.That(returnedColliders, Is.EquivalentTo(Enumerable.Empty<BoxCollider>()));
 		}
-		
+
 		[UnityTest]
-		public IEnumerator CachedEntityWithoutDestroyedComponentsRemoval_DestroyOneComponentAndGetAll_ReturnsAllIncludingTheDeleted()
+		public IEnumerator
+			CachedEntityWithoutDestroyedComponentsRemoval_DestroyOneComponentAndGetAll_ReturnsAllIncludingTheDeleted()
 		{
 			CachedEntity.RemoveDestroyedComponents = false;
 			var colliders = Enumerable.Range(0, 5)
@@ -167,9 +168,10 @@ namespace DELTation.Entities.Tests.Runtime
 
 			Assert.That(returnedColliders, Is.EquivalentTo(colliders));
 		}
-		
+
 		[UnityTest]
-		public IEnumerator CachedEntityWithDestroyedComponentsRemoval_DestroyOneComponentAndGetAll_ReturnsAllExceptTheDeleted()
+		public IEnumerator
+			CachedEntityWithDestroyedComponentsRemoval_DestroyOneComponentAndGetAll_ReturnsAllExceptTheDeleted()
 		{
 			CachedEntity.RemoveDestroyedComponents = true;
 			var colliders = Enumerable.Range(0, 5)
@@ -190,16 +192,16 @@ namespace DELTation.Entities.Tests.Runtime
 			var rigidbody = CachedEntity.GameObject.AddComponent<Rigidbody>();
 
 			var found = CachedEntity.TryGet<Rigidbody>(out var returnedRigidbody);
-			
+
 			Assert.That(found);
 			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
-		
+
 		[Test]
 		public void CachedEntityWithoutComponent_TryGet_ReturnsFalse()
 		{
 			var found = CachedEntity.TryGet<Rigidbody>(out _);
-			
+
 			Assert.That(found, Is.False);
 		}
 	}

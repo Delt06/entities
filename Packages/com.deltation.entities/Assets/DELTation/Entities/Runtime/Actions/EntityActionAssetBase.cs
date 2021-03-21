@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace DELTation.Entities.ScriptableObjects
+namespace DELTation.Entities.Actions
 {
 	public abstract class EntityActionAssetBase : ScriptableObject, IEntityAction
 	{

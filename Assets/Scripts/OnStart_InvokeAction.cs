@@ -1,5 +1,5 @@
-﻿using DELTation.Entities.Components;
-using DELTation.Entities.ScriptableObjects;
+﻿using DELTation.Entities;
+using DELTation.Entities.Actions;
 using UnityEngine;
 
 public class OnStart_InvokeAction : MonoBehaviour
