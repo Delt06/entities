@@ -8,7 +8,9 @@ namespace DELTation.Entities.Components
 	public sealed class CachedEntity : EntityBase
 	{
 		[SerializeField] private bool _searchInInactiveChildren = false;
-		[SerializeField, Tooltip("Whether to perform an additional null check on cached components.")] private bool _removeDestroyedComponents = false;
+
+		[SerializeField, Tooltip("Whether to perform an additional null check on cached components.")]
+		private bool _removeDestroyedComponents = false;
 
 		public bool SearchInInactiveChildren
 		{
@@ -32,7 +34,7 @@ namespace DELTation.Entities.Components
 				component = (T) componentObject;
 				if (!RemoveDestroyedComponents) return true;
 				if (!IsDestroyed(componentObject)) return true;
-				
+
 				_cache.Remove(type);
 				return TryGet(out component);
 			}
@@ -50,7 +52,7 @@ namespace DELTation.Entities.Components
 				_tryGetChecked.Add(type);
 				return false;
 			}
-			
+
 			_cache[type] = componentObject;
 			_tryGetChecked.Add(type);
 			component = (T) componentObject;
@@ -69,9 +71,10 @@ namespace DELTation.Entities.Components
 
 		private Exception ComponentNotFoundException(Type type) =>
 			new InvalidOperationException(
-				$"There is no component of type {type} in {gameObject} or its children.");
+				$"There is no component of type {type} in {gameObject} or its children."
+			);
 
-		public override T[] GetMany<T>() => GetMany<T>(true);
+		public override IReadOnlyList<T> GetMany<T>() => GetMany<T>(true);
 
 		private T[] GetMany<T>(bool lookUp) where T : class
 		{
@@ -79,7 +82,7 @@ namespace DELTation.Entities.Components
 			if (lookUp && _manyCache.TryGetValue(type, out var componentObjects))
 			{
 				if (!RemoveDestroyedComponents) return (T[]) componentObjects;
-				if (!AtLeastOneIsDestroyed<T>(componentObjects)) return (T[]) componentObjects; 
+				if (!AtLeastOneIsDestroyed<T>(componentObjects)) return (T[]) componentObjects;
 				return GetMany<T>(false);
 			}
 
