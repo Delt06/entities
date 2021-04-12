@@ -29,7 +29,7 @@ namespace DELTation.Entities.Systems
 			_isEnabled = false;
 			OnDisabled();
 		}
-		
+
 		protected virtual void OnDisabled() { }
 
 		private bool _isEnabled;
