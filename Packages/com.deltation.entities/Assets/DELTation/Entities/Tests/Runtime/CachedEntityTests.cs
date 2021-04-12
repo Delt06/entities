@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Object = UnityEngine.Object;
 
 namespace DELTation.Entities.Tests.Runtime
 {
@@ -16,13 +19,15 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
-			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
+			returnedRigidbody.Should().Be(rigidbody);
 		}
 
 		[Test]
 		public void CachedEntity_GetNonExistingComponent_ThrowsException()
 		{
-			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
+			CachedEntity.Invoking(e => e.Get<Rigidbody>())
+				.Should()
+				.Throw<Exception>();
 		}
 
 		[Test]
@@ -34,7 +39,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
-			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
+			returnedRigidbody.Should().Be(rigidbody);
 		}
 
 		[Test]
@@ -48,7 +53,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
-			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
+			returnedRigidbody.Should().Be(rigidbody);
 		}
 
 		[Test]
@@ -60,7 +65,9 @@ namespace DELTation.Entities.Tests.Runtime
 			child.SetActive(false);
 			CachedEntity.SearchInInactiveChildren = false;
 
-			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
+			CachedEntity.Invoking(e => e.Get<Rigidbody>())
+				.Should()
+				.Throw<Exception>();
 		}
 
 		[UnityTest]
@@ -73,7 +80,9 @@ namespace DELTation.Entities.Tests.Runtime
 			Object.Destroy(rigidbody);
 			yield return null;
 
-			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
+			CachedEntity.Invoking(e => e.Get<Rigidbody>())
+				.Should()
+				.Throw<Exception>();
 		}
 
 		[UnityTest]
@@ -99,7 +108,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(colliders));
+			returnedColliders.Should().BeEquivalentTo(colliders);
 		}
 
 		[Test]
@@ -115,7 +124,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(allColliders));
+			returnedColliders.Should().BeEquivalentTo(allColliders);
 		}
 
 		[Test]
@@ -133,7 +142,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(allColliders));
+			returnedColliders.Should().BeEquivalentTo(allColliders);
 		}
 
 		[Test]
@@ -149,7 +158,7 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(Enumerable.Empty<BoxCollider>()));
+			returnedColliders.Should().BeEmpty();
 		}
 
 		[UnityTest]
@@ -166,7 +175,7 @@ namespace DELTation.Entities.Tests.Runtime
 			yield return null;
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(colliders));
+			returnedColliders.Should().BeEquivalentTo(colliders);
 		}
 
 		[UnityTest]
@@ -183,7 +192,7 @@ namespace DELTation.Entities.Tests.Runtime
 			yield return null;
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
-			Assert.That(returnedColliders, Is.EquivalentTo(colliders.Skip(1)));
+			returnedColliders.Should().BeEquivalentTo(colliders.Skip(1));
 		}
 
 		[Test]
@@ -193,8 +202,8 @@ namespace DELTation.Entities.Tests.Runtime
 
 			var found = CachedEntity.TryGet<Rigidbody>(out var returnedRigidbody);
 
-			Assert.That(found);
-			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
+			found.Should().BeTrue();
+			returnedRigidbody.Should().Be(rigidbody);
 		}
 
 		[Test]
@@ -202,7 +211,7 @@ namespace DELTation.Entities.Tests.Runtime
 		{
 			var found = CachedEntity.TryGet<Rigidbody>(out _);
 
-			Assert.That(found, Is.False);
+			found.Should().BeFalse();
 		}
 	}
 }
