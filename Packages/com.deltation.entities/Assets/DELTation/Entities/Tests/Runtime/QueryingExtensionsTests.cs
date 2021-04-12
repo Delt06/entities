@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using FluentAssertions;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime
@@ -6,40 +8,57 @@ namespace DELTation.Entities.Tests.Runtime
 	internal class QueryingExtensionsTests : CachedEntityTestsBase
 	{
 		[Test]
-		public void TryGetInEntity_HasNoEntity_ReturnsFalse()
+		public void GivenGameObjectWithNoEntity_WhenTryingToGetInEntity_ThenFalseReturned()
 		{
+			// Arrange
 			var gameObject = new GameObject();
 
+			// Act
 			var hasInEntity = gameObject.TryGetInEntity<Rigidbody>(out _);
 
-			Assert.That(hasInEntity, Is.False);
+			// Assert
+			hasInEntity.Should().BeFalse();
 		}
 
 		[Test]
-		public void TryGetInEntity_HasEntityButNoComponent_ReturnsFalse()
+		public void GivenEntityButNoComponent_WhenTryingToGetInEntity_ThenFalseReturned()
 		{
+			// Arrange
+
+			// Act
 			var hasInEntity = CachedEntity.gameObject.TryGetInEntity<Rigidbody>(out _);
 
-			Assert.That(hasInEntity, Is.False);
+			// Assert
+			hasInEntity.Should().BeFalse();
 		}
 
 		[Test]
-		public void TryGetInEntity_HasEntityAndComponent_ReturnsTrueAndThatComponent()
+		public void GivenEntityWithComponent_WhenTryingToGetInEntity_ThenTrueAndComponentAreReturned()
 		{
+			// Arrange
 			var component = CachedEntity.gameObject.AddComponent<Rigidbody>();
 
+			// Act
 			var hasInEntity = CachedEntity.gameObject.TryGetInEntity<Rigidbody>(out var foundComponent);
 
-			Assert.That(hasInEntity);
-			Assert.That(foundComponent, Is.EqualTo(component));
+			// Assert
+			hasInEntity.Should().BeTrue();
+			foundComponent.Should().Be(component);
 		}
 
 		[Test]
-		public void TryGetInEntity_GameObjectIsNull_ThrowsArgumentNullException()
+		public void GivenNullGameObject_WhenTryingToGetInEntity_ThenThrowsArgumentNullException()
 		{
+			// Arrange
+
+			// Act
 			GameObject gameObject = null;
 
-			Assert.That(() => gameObject.TryGetInEntity<Rigidbody>(out _), Throws.ArgumentNullException);
+			// Assert
+			gameObject.Invoking(go => go.TryGetInEntity<Rigidbody>(out _))
+				.Should()
+				.Throw<ArgumentNullException>();
+
 		}
 	}
 }
