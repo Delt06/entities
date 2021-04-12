@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using FluentAssertions;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime.Ids
@@ -6,24 +8,33 @@ namespace DELTation.Entities.Tests.Runtime.Ids
 	internal class EntityIdTests
 	{
 		[Test]
-		public void EntityId_HasEntity_ReturnsIt()
+		public void GivenEntityIdWithEntity_WhenGettingEntity_ThenTheEntityIsReturned()
 		{
+			// Arrange
 			var gameObject = new GameObject();
 			var id = gameObject.AddComponent<TestEntityId>();
 			var entity = gameObject.AddComponent<CachedEntity>();
 
+			// Act
 			var foundEntity = id.Entity;
 
+			// Assert
 			Assert.That(foundEntity, Is.EqualTo(entity));
 		}
 
 		[Test]
-		public void EntityId_DoesNotHaveEntity_ThrowsInvalidOperationException()
+		public void GivenEntityIdWithoutEntity_WhenGettingEntity_ThenThrowsInvalidOperationException()
 		{
+			// Arrange
 			var gameObject = new GameObject();
 			var id = gameObject.AddComponent<TestEntityId>();
 
-			Assert.That(() => id.Entity, Throws.InvalidOperationException);
+			// Act
+
+			// Assert
+			id.Invoking(i => i.Entity)
+				.Should()
+				.Throw<InvalidOperationException>();
 		}
 	}
 }

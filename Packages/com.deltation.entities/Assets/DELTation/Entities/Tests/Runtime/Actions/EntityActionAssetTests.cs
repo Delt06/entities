@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using FluentAssertions;
+using NUnit.Framework;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace DELTation.Entities.Tests.Runtime.Actions
 {
@@ -23,17 +26,28 @@ namespace DELTation.Entities.Tests.Runtime.Actions
 		}
 
 		[Test]
-		public void Action_OnNullEntity_ThrowsArgumentNullException()
+		public void GivenAction_WhenInvokingOnNullEntity_ThenThrowsArgumentNullException()
 		{
-			Assert.That(() => _action.Invoke(null), Throws.ArgumentNullException);
+			// Arrange
+
+			// Act
+
+			// Assert
+			_action.Invoking(a => a.Invoke(null))
+				.Should()
+				.Throw<ArgumentNullException>();
 		}
 
 		[Test]
-		public void Action_OnEntity_ExecutesOneTime()
+		public void GivenAction_WhenInvokingOnEntity_ThenInvokedOneTime()
 		{
+			// Arrange
+				
+			// Act
 			_action.Invoke(CachedEntity);
-
-			Assert.That(_action.Value, Is.EqualTo(1));
+				
+			// Assert
+			_action.Value.Should().Be(1);
 		}
 	}
 }
