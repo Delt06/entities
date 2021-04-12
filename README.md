@@ -52,7 +52,7 @@ Action are delegate-like object (Strategy pattern) with an entity passed as an a
 An example of action definition:
 ```c#
 using DELTation.Entities;
-using DELTation.Entities.ScriptableObjects;
+using DELTation.Entities.Actions;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -69,8 +69,8 @@ public class JumpingAbility : EntityActionAssetBase
 
 An example of action invocation:
 ```c#
-using DELTation.Entities.Components;
-using DELTation.Entities.ScriptableObjects;
+using DELTation.Entities;
+using DELTation.Entities.Actions;
 using UnityEngine;
 
 public class OnStart_InvokeAction : MonoBehaviour
