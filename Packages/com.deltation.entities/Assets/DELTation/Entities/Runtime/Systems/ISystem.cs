@@ -2,9 +2,8 @@
 
 namespace DELTation.Entities.Systems
 {
-	public interface IUpdateSystem
+	public interface ISystem
 	{
 		bool ShouldBeExecuted([NotNull] IEntity entity);
-		void Execute([NotNull] IEntity entity, float deltaTime);
 	}
 }

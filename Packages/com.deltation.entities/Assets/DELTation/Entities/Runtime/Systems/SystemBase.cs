@@ -3,17 +3,12 @@ using UnityEngine;
 
 namespace DELTation.Entities.Systems
 {
-	public abstract class UpdateSystemBase : MonoBehaviour, IUpdateSystem
+	public abstract class SystemBase : MonoBehaviour, ISystem
 	{
 		public virtual bool ShouldBeExecuted(IEntity entity)
 		{
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
 			return _isEnabled;
-		}
-
-		public virtual void Execute(IEntity entity, float deltaTime)
-		{
-			if (entity == null) throw new ArgumentNullException(nameof(entity));
 		}
 
 		protected void OnEnable()
