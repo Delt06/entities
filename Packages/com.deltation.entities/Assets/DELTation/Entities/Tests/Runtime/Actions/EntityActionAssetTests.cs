@@ -42,10 +42,10 @@ namespace DELTation.Entities.Tests.Runtime.Actions
 		public void GivenAction_WhenInvokingOnEntity_ThenInvokedOneTime()
 		{
 			// Arrange
-				
+
 			// Act
 			_action.Invoke(CachedEntity);
-				
+
 			// Assert
 			_action.Value.Should().Be(1);
 		}

@@ -9,7 +9,7 @@ namespace DELTation.Entities
 		bool TryGet<T>(out T component) where T : class;
 		T Get<T>() where T : class;
 		IReadOnlyList<T> GetMany<T>() where T : class;
-		
+
 		ITagCollection Tags { get; }
 	}
 }

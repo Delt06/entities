@@ -5,9 +5,9 @@ namespace DELTation.Entities
 {
 	public sealed class TagCollection : ITagCollection
 	{
-		public bool Contains<T>()=> _counts.ContainsKey(typeof(T));
+		public bool Contains<T>() => _counts.ContainsKey(typeof(T));
 
-		public int GetCount<T>()=> _counts.TryGetValue(typeof(T), out var count) ? count : 0;
+		public int GetCount<T>() => _counts.TryGetValue(typeof(T), out var count) ? count : 0;
 
 		public void Add<T>() => AddMany<T>(1);
 
@@ -29,7 +29,7 @@ namespace DELTation.Entities
 		{
 			if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 			if (count == 0) return;
-			
+
 			var type = typeof(T);
 			if (!_counts.TryGetValue(type, out var currentCount)) return;
 

@@ -14,7 +14,7 @@ namespace DELTation.Entities.Tests.Editor
 		{
 			_tags = new TagCollection();
 		}
-		
+
 		[Test]
 		public void GivenCollection_WhenAddingTag_ThenCountIsIncrementedAndContains()
 		{
@@ -43,10 +43,7 @@ namespace DELTation.Entities.Tests.Editor
 			_tags.Contains<string>().Should().BeFalse();
 		}
 
-		[Test]
-		[TestCase(1)]
-		[TestCase(2)]
-		[TestCase(5)]
+		[Test, TestCase(1), TestCase(2), TestCase(5)]
 		public void GivenCollection_WhenAddingManyTags_ThenCountIsIncreasedByThatNumberAndContains(int number)
 		{
 			// Arrange
@@ -60,7 +57,7 @@ namespace DELTation.Entities.Tests.Editor
 			newCount.Should().Be(oldCount + number);
 			_tags.Contains<string>().Should().BeTrue();
 		}
-		
+
 		[Test]
 		public void GivenCollection_WhenAddingManyTagsButZero_ThenCountIsNotIncreasedAndDoesNotContain()
 		{
@@ -87,13 +84,8 @@ namespace DELTation.Entities.Tests.Editor
 			// Assert
 			_tags.GetCount<string>().Should().Be(0);
 		}
-		
-		[Test]
-		[TestCase(0)]
-		[TestCase(1)]
-		[TestCase(2)]
-		[TestCase(5)]
-		[TestCase(10)]
+
+		[Test, TestCase(0), TestCase(1), TestCase(2), TestCase(5), TestCase(10)]
 		public void GivenCollection_WhenRemovingMany_ThenNumberIsDecremented(int removal)
 		{
 			// Arrange
@@ -108,12 +100,7 @@ namespace DELTation.Entities.Tests.Editor
 			newCount.Should().Be(Mathf.Max(initialCount - removal, 0));
 		}
 
-		[Test]
-		[TestCase(0)]
-		[TestCase(1)]
-		[TestCase(2)]
-		[TestCase(5)]
-		[TestCase(10)]
+		[Test, TestCase(0), TestCase(1), TestCase(2), TestCase(5), TestCase(10)]
 		public void GivenCollection_WhenRemovingAll_ThenNumberIsZeroAndDoesNotContain(int initialCount)
 		{
 			// Arrange
@@ -133,10 +120,10 @@ namespace DELTation.Entities.Tests.Editor
 			// Arrange
 			_tags.AddMany<string>(10);
 			_tags.AddMany<int>(5);
-			
+
 			// Act
 			_tags.Clear();
-			
+
 			// Assert
 			_tags.GetCount<string>().Should().Be(0);
 			_tags.GetCount<int>().Should().Be(0);
@@ -144,10 +131,7 @@ namespace DELTation.Entities.Tests.Editor
 			_tags.Contains<int>().Should().BeFalse();
 		}
 
-		[Test]
-		[TestCase(-1)]
-		[TestCase(-2)]
-		[TestCase(-15)]
+		[Test, TestCase(-1), TestCase(-2), TestCase(-15)]
 		public void GivenCollection_WhenAddingManyButNegativeNumber_ThenThrowsArgumentOutOfRangeException(int number)
 		{
 			// Arrange
@@ -159,11 +143,8 @@ namespace DELTation.Entities.Tests.Editor
 				.Should()
 				.Throw<ArgumentOutOfRangeException>();
 		}
-		
-		[Test]
-		[TestCase(-1)]
-		[TestCase(-2)]
-		[TestCase(-15)]
+
+		[Test, TestCase(-1), TestCase(-2), TestCase(-15)]
 		public void GivenCollection_WhenARemovingManyButNegativeNumber_ThenThrowsArgumentOutOfRangeException(int number)
 		{
 			// Arrange

@@ -17,7 +17,7 @@ namespace DELTation.Entities.Tests.Runtime
 		{
 			// Arrange
 			var rigidbody = CachedEntity.GameObject.AddComponent<Rigidbody>();
-			
+
 			// Act
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
@@ -109,7 +109,7 @@ namespace DELTation.Entities.Tests.Runtime
 			CachedEntity.RemoveDestroyedComponents = false;
 			var rigidbody = CachedEntity.GameObject.AddComponent<Rigidbody>();
 			CachedEntity.Get<Rigidbody>();
-			
+
 			// Act
 			Object.Destroy(rigidbody);
 			yield return null;
@@ -173,7 +173,8 @@ namespace DELTation.Entities.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator GivenDestroyedComponentsRemovalDisabled_WhenDestroyingOneComponentAndGettingAll_ThenAllIncludingTheDeletedAreReturned()
+		public IEnumerator
+			GivenDestroyedComponentsRemovalDisabled_WhenDestroyingOneComponentAndGettingAll_ThenAllIncludingTheDeletedAreReturned()
 		{
 			// Arrange
 			CachedEntity.RemoveDestroyedComponents = false;
@@ -192,7 +193,8 @@ namespace DELTation.Entities.Tests.Runtime
 		}
 
 		[UnityTest]
-		public IEnumerator GivenDestroyedComponentsRemoval_WhenDestroyingOneComponentAndGettingAll_ThenAllExceptTheDeletedAreReturned()
+		public IEnumerator
+			GivenDestroyedComponentsRemoval_WhenDestroyingOneComponentAndGettingAll_ThenAllExceptTheDeletedAreReturned()
 		{
 			// Arrange
 			CachedEntity.RemoveDestroyedComponents = true;
