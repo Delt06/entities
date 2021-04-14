@@ -76,6 +76,8 @@ namespace DELTation.Entities
 
 		public override IReadOnlyList<T> GetMany<T>() => GetMany<T>(true);
 
+		public override ITagCollection Tags { get; } = new TagCollection();
+
 		private T[] GetMany<T>(bool lookUp) where T : class
 		{
 			var type = typeof(T);

@@ -236,5 +236,16 @@ namespace DELTation.Entities.Tests.Runtime
 			// Assert
 			found.Should().BeFalse();
 		}
+
+		[Test]
+		public void GivenEntity_WhenGettingTagCollection_ThenItIsNotNull()
+		{
+			// Arrange
+
+			// Act
+
+			// Assert
+			CachedEntity.Tags.Should().NotBeNull();
+		}
 	}
 }
