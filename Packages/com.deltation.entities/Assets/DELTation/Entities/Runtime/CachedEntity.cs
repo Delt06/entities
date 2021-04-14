@@ -13,6 +13,8 @@ namespace DELTation.Entities
 		[SerializeField, Tooltip("Whether to perform an additional null check on cached components.")]
 		private bool _removeDestroyedComponents = false;
 
+		[SerializeField] private bool _clearTagsOnDisable = false;
+
 		public bool SearchInInactiveChildren
 		{
 			get => _searchInInactiveChildren;
@@ -105,6 +107,12 @@ namespace DELTation.Entities
 			}
 
 			return false;
+		}
+		
+		private void OnDisable()
+		{
+			if (_clearTagsOnDisable)
+				Tags.Clear();
 		}
 
 		private readonly IDictionary<Type, object> _cache = new Dictionary<Type, object>();
