@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -76,7 +77,7 @@ namespace DELTation.Entities
 
 		public override IReadOnlyList<T> GetMany<T>() => GetMany<T>(true);
 
-		public override ITagCollection Tags { get; } = new TagCollection();
+		public override ITagCollection Tags => _tagCollection ?? (_tagCollection = new TagCollection());
 
 		private T[] GetMany<T>(bool lookUp) where T : class
 		{
@@ -109,5 +110,8 @@ namespace DELTation.Entities
 		private readonly IDictionary<Type, object> _cache = new Dictionary<Type, object>();
 		private readonly IDictionary<Type, object> _manyCache = new Dictionary<Type, object>();
 		private readonly ISet<Type> _tryGetChecked = new HashSet<Type>();
+
+		[CanBeNull]
+		private ITagCollection _tagCollection;
 	}
 }
