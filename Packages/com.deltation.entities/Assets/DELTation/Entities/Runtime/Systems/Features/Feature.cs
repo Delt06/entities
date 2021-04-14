@@ -13,31 +13,38 @@ namespace DELTation.Entities.Systems.Features
 		protected void Add([NotNull] IInitSystem system)
 		{
 			if (system == null) throw new ArgumentNullException(nameof(system));
-			_initSystems.Add(system);
+			GetOrCreateListAndAdd(ref _initSystems, system);
 		}
 
 		protected void Add([NotNull] IUpdateSystem system)
 		{
 			if (system == null) throw new ArgumentNullException(nameof(system));
-			_updateSystems.Add(system);
+			GetOrCreateListAndAdd(ref _updateSystems, system);
 		}
 
 		protected void Add([NotNull] IFixedUpdateSystem system)
 		{
 			if (system == null) throw new ArgumentNullException(nameof(system));
-			_fixedUpdateSystems.Add(system);
+			GetOrCreateListAndAdd(ref _fixedUpdateSystems, system);
 		}
 
 		protected void Add([NotNull] ILateUpdateSystem system)
 		{
 			if (system == null) throw new ArgumentNullException(nameof(system));
-			_lateUpdateSystems.Add(system);
+			GetOrCreateListAndAdd(ref _lateUpdateSystems, system);
+		}
+
+		private static void GetOrCreateListAndAdd<T>([CanBeNull] ref List<T> list, T item)
+		{
+			if (list == null)
+				list = new List<T>();
+			list.Add(item);
 		}
 
 		public void Init(IEntity entity)
 		{
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			_initSystems.ExecuteAllThatShould(entity);
+			_initSystems?.ExecuteAllThatShould(entity);
 		}
 
 		void IUpdateSystem.Execute(IEntity entity, float deltaTime)
@@ -48,7 +55,7 @@ namespace DELTation.Entities.Systems.Features
 		public void ExecuteUpdate(IEntity entity, float deltaTime)
 		{
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			_updateSystems.ExecuteAllThatShould(entity, deltaTime);
+			_updateSystems?.ExecuteAllThatShould(entity, deltaTime);
 		}
 
 		void ILateUpdateSystem.Execute(IEntity entity, float deltaTime)
@@ -59,7 +66,7 @@ namespace DELTation.Entities.Systems.Features
 		public void ExecuteLateUpdate(IEntity entity, float deltaTime)
 		{
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			_lateUpdateSystems.ExecuteAllThatShould(entity, deltaTime);
+			_lateUpdateSystems?.ExecuteAllThatShould(entity, deltaTime);
 		}
 
 		void IFixedUpdateSystem.Execute(IEntity entity, float deltaTime)
@@ -75,12 +82,12 @@ namespace DELTation.Entities.Systems.Features
 		public void ExecuteFixedUpdate(IEntity entity, float deltaTime)
 		{
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			_fixedUpdateSystems.ExecuteAllThatShould(entity, deltaTime);
+			_fixedUpdateSystems?.ExecuteAllThatShould(entity, deltaTime);
 		}
 
-		private readonly List<IInitSystem> _initSystems = new List<IInitSystem>();
-		private readonly List<IUpdateSystem> _updateSystems = new List<IUpdateSystem>();
-		private readonly List<IFixedUpdateSystem> _fixedUpdateSystems = new List<IFixedUpdateSystem>();
-		private readonly List<ILateUpdateSystem> _lateUpdateSystems = new List<ILateUpdateSystem>();
+		[CanBeNull] private List<IInitSystem> _initSystems;
+		[CanBeNull] private List<IUpdateSystem> _updateSystems;
+		[CanBeNull] private List<IFixedUpdateSystem> _fixedUpdateSystems;
+		[CanBeNull] private List<ILateUpdateSystem> _lateUpdateSystems;
 	}
 }
