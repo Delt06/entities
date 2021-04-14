@@ -1,16 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace DELTation.Entities.Systems.Execute
+﻿namespace DELTation.Entities.Systems.Execute
 {
-	public abstract class ExecuteSystemBase : SystemBase, IExecuteSystem
+	public abstract class ExecuteSystemBase : ISystem
 	{
-		public void Execute(IEntity entity, float deltaTime)
-		{
-			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			OnExecute(entity, deltaTime);
-		}
+		public virtual bool ShouldBeExecuted(IEntity entity) => true;
 
-		protected abstract void OnExecute([NotNull] IEntity entity, float deltaTime);
+		public abstract void Execute(IEntity entity, float deltaTime);
 	}
 }

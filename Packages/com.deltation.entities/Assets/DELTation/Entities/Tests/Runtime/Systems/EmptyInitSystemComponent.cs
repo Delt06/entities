@@ -2,7 +2,7 @@
 
 namespace DELTation.Entities.Tests.Runtime.Systems
 {
-	public class EmptyInitSystem : InitSystemBase
+	public class EmptyInitSystemComponent : InitSystemComponentBase
 	{
 		protected override void OnInit(IEntity entity) { }
 	}
