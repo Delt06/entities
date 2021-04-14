@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DELTation.Entities.Systems
 {
-	public abstract class SystemBase : MonoBehaviour, ISystem
+	public abstract class SystemComponentBase : MonoBehaviour, ISystem
 	{
 		public virtual bool ShouldBeExecuted(IEntity entity)
 		{

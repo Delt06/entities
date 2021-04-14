@@ -15,7 +15,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		{
 			// Arrange
 			var gameObject = new GameObject();
-			var system = gameObject.AddComponent<EmptyInitSystem>();
+			var system = gameObject.AddComponent<EmptyInitSystemComponent>();
 			var entity = Substitute.For<IEntity>();
 
 			// Act
@@ -31,7 +31,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 			// Arrange
 			var gameObject = new GameObject();
 			gameObject.SetActive(false);
-			var system = gameObject.AddComponent<EmptyInitSystem>();
+			var system = gameObject.AddComponent<EmptyInitSystemComponent>();
 			var entity = Substitute.For<IEntity>();
 
 			// Act
@@ -45,7 +45,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		public void GivenInitSystem_WhenCallingShouldBeExecutedWithNullEntity_ThenThrowsArgumentNullException()
 		{
 			// Arrange
-			var system = new GameObject().AddComponent<EmptyInitSystem>();
+			var system = new GameObject().AddComponent<EmptyInitSystemComponent>();
 
 			// Act
 

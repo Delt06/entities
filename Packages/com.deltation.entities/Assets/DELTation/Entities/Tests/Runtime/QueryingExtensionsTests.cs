@@ -58,7 +58,6 @@ namespace DELTation.Entities.Tests.Runtime
 			gameObject.Invoking(go => go.TryGetInEntity<Rigidbody>(out _))
 				.Should()
 				.Throw<ArgumentNullException>();
-
 		}
 	}
 }

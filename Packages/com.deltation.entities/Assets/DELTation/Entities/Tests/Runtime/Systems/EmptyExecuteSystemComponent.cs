@@ -2,7 +2,7 @@
 
 namespace DELTation.Entities.Tests.Runtime.Systems
 {
-	public class EmptyExecuteSystem : UpdateSystemBase
+	public class EmptyExecuteSystemComponent : UpdateSystemComponentBase
 	{
 		public int ExecutedTimes { get; private set; }
 

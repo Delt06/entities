@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -11,6 +12,8 @@ namespace DELTation.Entities
 
 		[SerializeField, Tooltip("Whether to perform an additional null check on cached components.")]
 		private bool _removeDestroyedComponents = false;
+
+		[SerializeField] private bool _clearTagsOnDisable = false;
 
 		public bool SearchInInactiveChildren
 		{
@@ -76,6 +79,8 @@ namespace DELTation.Entities
 
 		public override IReadOnlyList<T> GetMany<T>() => GetMany<T>(true);
 
+		public override ITagCollection Tags => _tagCollection ?? (_tagCollection = new TagCollection());
+
 		private T[] GetMany<T>(bool lookUp) where T : class
 		{
 			var type = typeof(T);
@@ -103,9 +108,18 @@ namespace DELTation.Entities
 
 			return false;
 		}
+		
+		private void OnDisable()
+		{
+			if (_clearTagsOnDisable)
+				Tags.Clear();
+		}
 
 		private readonly IDictionary<Type, object> _cache = new Dictionary<Type, object>();
 		private readonly IDictionary<Type, object> _manyCache = new Dictionary<Type, object>();
 		private readonly ISet<Type> _tryGetChecked = new HashSet<Type>();
+
+		[CanBeNull]
+		private ITagCollection _tagCollection;
 	}
 }

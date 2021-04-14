@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using DELTation.Entities.Systems;
 using DELTation.Entities.Systems.Execute;
 using DELTation.Entities.Systems.Init;
@@ -19,12 +20,13 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		public void GivenUpdaterWithoutEntity_WhenAwaking_ThenBecomesDisabled()
 		{
 			// Arrange
-			LogAssert.ignoreFailingMessages = true;
+			Debug.unityLogger.logEnabled = false;
 			var systemUpdater = new GameObject().AddComponent<SystemUpdater>();
 
 			// Act
 
 			// Assert
+			Debug.unityLogger.logEnabled = true;
 			systemUpdater.enabled.Should().Be(false);
 		}
 
@@ -56,41 +58,46 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		[UnityTest]
 		public IEnumerator GivenEnabledUpdateSystem_WhenUpdating_ThenSystemIsExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(true, u => u.UpdateSystems);
+			return CheckThatExecuteSystemIsExecuted(true, u => u.UpdateSystems, (s, e, dt) => s.Execute(e, dt));
 		}
 
 		[UnityTest]
 		public IEnumerator GivenDisabledUpdateSystem_WhenUpdating_ThenSystemIsNotExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(false, u => u.UpdateSystems);
+			return CheckThatExecuteSystemIsExecuted(false, u => u.UpdateSystems, (s, e, dt) => s.Execute(e, dt));
 		}
 
 		[UnityTest]
 		public IEnumerator GivenEnabledFixedUpdateSystem_WhenUpdating_ThenSystemIsExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(true, u => u.FixedUpdateSystems, new WaitForFixedUpdate());
+			return CheckThatExecuteSystemIsExecuted(true, u => u.FixedUpdateSystems, (s, e, dt) => s.Execute(e, dt),
+				new WaitForFixedUpdate()
+			);
 		}
 
 		[UnityTest]
 		public IEnumerator GivenDisabledFixedUpdateSystem_WhenUpdating_ThenSystemIsNotExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(false, u => u.FixedUpdateSystems, new WaitForFixedUpdate());
+			return CheckThatExecuteSystemIsExecuted(false, u => u.FixedUpdateSystems, (s, e, dt) => s.Execute(e, dt),
+				new WaitForFixedUpdate()
+			);
 		}
 
 		[UnityTest]
 		public IEnumerator GivenEnabledLateUpdateSystem_WhenUpdating_ThenSystemIsExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(true, u => u.LateUpdateSystems);
+			return CheckThatExecuteSystemIsExecuted(true, u => u.LateUpdateSystems, (s, e, dt) => s.Execute(e, dt));
 		}
 
 		[UnityTest]
 		public IEnumerator GivenDisabledLateUpdateSystem_WhenUpdating_ThenSystemIsNotExecuted()
 		{
-			return CheckThatExecuteSystemIsExecuted(false, u => u.LateUpdateSystems);
+			return CheckThatExecuteSystemIsExecuted(false, u => u.LateUpdateSystems, (s, e, dt) => s.Execute(e, dt));
 		}
 
 		private static IEnumerator CheckThatExecuteSystemIsExecuted<TExecuteSystem>(bool enabled,
-			Func<SystemUpdater, List<TExecuteSystem>> getSystems, object awaiter = null)
+			Func<SystemUpdater, List<TExecuteSystem>> getSystems, Action<TExecuteSystem, IEntity, float> executor,
+			object awaiter = null)
 			where TExecuteSystem : class, IExecuteSystem
 		{
 			// Arrange
@@ -103,9 +110,9 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 
 			// Assert
 			if (enabled)
-				system.Received(1).Execute(updater.Entity, Arg.Any<float>());
+				executor(system.Received(1), updater.Entity, Arg.Any<float>());
 			else
-				system.DidNotReceive().Execute(Arg.Any<IEntity>(), Arg.Any<float>());
+				executor(system.DidNotReceive(), Arg.Any<IEntity>(), Arg.Any<float>());
 		}
 	}
 }

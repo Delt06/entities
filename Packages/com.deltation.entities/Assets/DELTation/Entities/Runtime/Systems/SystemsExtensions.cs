@@ -9,8 +9,9 @@ namespace DELTation.Entities.Systems
 {
 	internal static class SystemsExtensions
 	{
-		public static void ExecuteAllThatShould<T>([NotNull] this IReadOnlyList<T> systems, [NotNull] IEntity entity,
-			float deltaTime) where T : IExecuteSystem
+		public static void ExecuteAllThatShould([NotNull] this IReadOnlyList<IExecuteSystem> systems,
+			[NotNull] IEntity entity,
+			float deltaTime)
 		{
 			if (systems == null) throw new ArgumentNullException(nameof(systems));
 			if (entity == null) throw new ArgumentNullException(nameof(entity));
@@ -26,7 +27,25 @@ namespace DELTation.Entities.Systems
 				}
 
 				if (system.ShouldBeExecuted(entity))
-					system.Execute(entity, deltaTime);
+					Execute(system, entity, deltaTime);
+			}
+		}
+
+		private static void Execute(IExecuteSystem system, IEntity entity, float deltaTime)
+		{
+			switch (system)
+			{
+				case IUpdateSystem updateSystem:
+					updateSystem.Execute(entity, deltaTime);
+					break;
+				case IFixedUpdateSystem fixedUpdateSystem:
+					fixedUpdateSystem.Execute(entity, deltaTime);
+					break;
+				case ILateUpdateSystem lateUpdateSystem:
+					lateUpdateSystem.Execute(entity, deltaTime);
+					break;
+				default:
+					throw new ArgumentException($"Unknown execute system type: {system?.GetType()}.");
 			}
 		}
 

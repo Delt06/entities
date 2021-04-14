@@ -12,7 +12,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		public void GivenUpdateSystem_WhenExecutingWithNullEntity_ThenThrowsArgumentNullException()
 		{
 			// Arrange
-			var executeSystem = new GameObject().AddComponent<EmptyExecuteSystem>();
+			var executeSystem = new GameObject().AddComponent<EmptyExecuteSystemComponent>();
 
 			// Act
 
@@ -26,7 +26,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		public void GivenUpdateSystem_WhenExecuting_ThenExecutedOnce()
 		{
 			// Arrange
-			var executeSystem = new GameObject().AddComponent<EmptyExecuteSystem>();
+			var executeSystem = new GameObject().AddComponent<EmptyExecuteSystemComponent>();
 			var entity = Substitute.For<IEntity>();
 
 			// Act

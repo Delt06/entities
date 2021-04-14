@@ -1,16 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace DELTation.Entities.Systems.Init
+﻿namespace DELTation.Entities.Systems.Init
 {
-	public abstract class InitSystemBase : SystemBase, IInitSystem
+	public abstract class InitSystemBase : IInitSystem
 	{
-		public void Init(IEntity entity)
-		{
-			if (entity == null) throw new ArgumentNullException(nameof(entity));
-			OnInit(entity);
-		}
+		public bool ShouldBeExecuted(IEntity entity) => true;
 
-		protected abstract void OnInit([NotNull] IEntity entity);
+		public abstract void Init(IEntity entity);
 	}
 }
