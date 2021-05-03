@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
-using FluentAssertions;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -22,7 +20,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
 			// Assert
-			returnedRigidbody.Should().Be(rigidbody);
+			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
 
 		[Test]
@@ -33,9 +31,7 @@ namespace DELTation.Entities.Tests.Runtime
 			// Act
 
 			// Assert
-			CachedEntity.Invoking(e => e.Get<Rigidbody>())
-				.Should()
-				.Throw<Exception>();
+			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
 		}
 
 		[Test]
@@ -50,7 +46,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
 			// Assert
-			returnedRigidbody.Should().Be(rigidbody);
+			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
 
 		[Test]
@@ -67,7 +63,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedRigidbody = CachedEntity.Get<Rigidbody>();
 
 			// Assert
-			returnedRigidbody.Should().Be(rigidbody);
+			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
 
 		[Test]
@@ -79,9 +75,7 @@ namespace DELTation.Entities.Tests.Runtime
 			child.SetActive(false);
 			CachedEntity.SearchInInactiveChildren = false;
 
-			CachedEntity.Invoking(e => e.Get<Rigidbody>())
-				.Should()
-				.Throw<Exception>();
+			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
 		}
 
 		[UnityTest]
@@ -97,9 +91,7 @@ namespace DELTation.Entities.Tests.Runtime
 			yield return null;
 
 			// Assert
-			CachedEntity.Invoking(e => e.Get<Rigidbody>())
-				.Should()
-				.Throw<Exception>();
+			Assert.That(() => CachedEntity.Get<Rigidbody>(), Throws.Exception);
 		}
 
 		[UnityTest]
@@ -131,7 +123,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
 			// Assert
-			returnedColliders.Should().BeEquivalentTo(colliders);
+			Assert.That(returnedColliders, Is.EquivalentTo(colliders));
 		}
 
 		[Test]
@@ -150,7 +142,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
 			// Assert
-			returnedColliders.Should().BeEquivalentTo(allColliders);
+			Assert.That(returnedColliders, Is.EquivalentTo(allColliders));
 		}
 
 		[Test]
@@ -169,7 +161,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
 			// Assert
-			returnedColliders.Should().BeEmpty();
+			Assert.That(returnedColliders, Is.Empty);
 		}
 
 		[UnityTest]
@@ -189,7 +181,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
 			// Assert
-			returnedColliders.Should().BeEquivalentTo(colliders);
+			Assert.That(returnedColliders, Is.EqualTo(colliders));
 		}
 
 		[UnityTest]
@@ -209,7 +201,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var returnedColliders = CachedEntity.GetMany<BoxCollider>();
 
 			// Assert
-			returnedColliders.Should().BeEquivalentTo(colliders.Skip(1));
+			Assert.That(returnedColliders, Is.EquivalentTo(colliders.Skip(1)));
 		}
 
 
@@ -223,8 +215,8 @@ namespace DELTation.Entities.Tests.Runtime
 			var found = CachedEntity.TryGet<Rigidbody>(out var returnedRigidbody);
 
 			// Assert
-			found.Should().BeTrue();
-			returnedRigidbody.Should().Be(rigidbody);
+			Assert.That(found);
+			Assert.That(returnedRigidbody, Is.EqualTo(rigidbody));
 		}
 
 		[Test]
@@ -236,7 +228,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var found = CachedEntity.TryGet<Rigidbody>(out _);
 
 			// Assert
-			found.Should().BeFalse();
+			Assert.That(found, Is.False);
 		}
 
 		[Test]
@@ -247,7 +239,7 @@ namespace DELTation.Entities.Tests.Runtime
 			// Act
 
 			// Assert
-			CachedEntity.Tags.Should().NotBeNull();
+			Assert.That(CachedEntity.Tags, Is.Not.Null);
 		}
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -33,9 +31,7 @@ namespace DELTation.Entities.Tests.Runtime.Actions
 			// Act
 
 			// Assert
-			_action.Invoking(a => a.Invoke(null))
-				.Should()
-				.Throw<ArgumentNullException>();
+			Assert.That(() => _action.Invoke(null), Throws.ArgumentNullException);
 		}
 
 		[Test]
@@ -47,7 +43,7 @@ namespace DELTation.Entities.Tests.Runtime.Actions
 			_action.Invoke(CachedEntity);
 
 			// Assert
-			_action.Value.Should().Be(1);
+			Assert.That(_action.Value, Is.EqualTo(1));
 		}
 	}
 }

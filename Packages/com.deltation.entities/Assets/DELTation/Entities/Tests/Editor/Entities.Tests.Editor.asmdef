@@ -10,8 +10,6 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "NSubstitute.dll",
-        "FluentAssertions.dll",
         "nunit.framework.dll"
     ],
     "autoReferenced": true,

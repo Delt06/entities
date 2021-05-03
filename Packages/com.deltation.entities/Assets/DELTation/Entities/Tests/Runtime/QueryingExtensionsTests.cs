@@ -1,6 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime
@@ -17,7 +15,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var hasInEntity = gameObject.TryGetInEntity<Rigidbody>(out _);
 
 			// Assert
-			hasInEntity.Should().BeFalse();
+			Assert.That(hasInEntity, Is.False);
 		}
 
 		[Test]
@@ -29,7 +27,7 @@ namespace DELTation.Entities.Tests.Runtime
 			var hasInEntity = CachedEntity.gameObject.TryGetInEntity<Rigidbody>(out _);
 
 			// Assert
-			hasInEntity.Should().BeFalse();
+			Assert.That(hasInEntity, Is.False);
 		}
 
 		[Test]
@@ -42,8 +40,8 @@ namespace DELTation.Entities.Tests.Runtime
 			var hasInEntity = CachedEntity.gameObject.TryGetInEntity<Rigidbody>(out var foundComponent);
 
 			// Assert
-			hasInEntity.Should().BeTrue();
-			foundComponent.Should().Be(component);
+			Assert.That(hasInEntity);
+			Assert.That(foundComponent, Is.EqualTo(component));
 		}
 
 		[Test]
@@ -55,9 +53,7 @@ namespace DELTation.Entities.Tests.Runtime
 			GameObject gameObject = null;
 
 			// Assert
-			gameObject.Invoking(go => go.TryGetInEntity<Rigidbody>(out _))
-				.Should()
-				.Throw<ArgumentNullException>();
+			Assert.That(() => gameObject.TryGetInEntity<Rigidbody>(out _), Throws.ArgumentNullException);
 		}
 	}
 }

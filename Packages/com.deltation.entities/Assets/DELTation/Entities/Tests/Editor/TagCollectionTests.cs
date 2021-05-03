@@ -1,5 +1,4 @@
 ﻿using System;
-using FluentAssertions;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -26,8 +25,8 @@ namespace DELTation.Entities.Tests.Editor
 			var newCount = _tags.GetCount<string>();
 
 			// Assert
-			newCount.Should().Be(oldCount + 1);
-			_tags.Contains<string>().Should().BeTrue();
+			Assert.That(newCount, Is.EqualTo(oldCount + 1));
+			Assert.That(_tags.Contains<string>());
 		}
 
 		[Test]
@@ -39,8 +38,8 @@ namespace DELTation.Entities.Tests.Editor
 			var count = _tags.GetCount<string>();
 
 			// Assert
-			count.Should().Be(0);
-			_tags.Contains<string>().Should().BeFalse();
+			Assert.That(count, Is.Zero);
+			Assert.That(_tags.Contains<string>(), Is.False);
 		}
 
 		[Test, TestCase(1), TestCase(2), TestCase(5)]
@@ -54,8 +53,8 @@ namespace DELTation.Entities.Tests.Editor
 			var newCount = _tags.GetCount<string>();
 
 			// Assert
-			newCount.Should().Be(oldCount + number);
-			_tags.Contains<string>().Should().BeTrue();
+			Assert.That(newCount, Is.EqualTo(oldCount + number));
+			Assert.That(_tags.Contains<string>());
 		}
 
 		[Test]
@@ -69,8 +68,8 @@ namespace DELTation.Entities.Tests.Editor
 			var newCount = _tags.GetCount<string>();
 
 			// Assert
-			newCount.Should().Be(oldCount);
-			_tags.Contains<string>().Should().BeFalse();
+			Assert.That(newCount, Is.EqualTo(oldCount));
+			Assert.That(_tags.Contains<string>(), Is.False);
 		}
 
 		[Test]
@@ -82,7 +81,7 @@ namespace DELTation.Entities.Tests.Editor
 			_tags.Remove<string>();
 
 			// Assert
-			_tags.GetCount<string>().Should().Be(0);
+			Assert.That(_tags.GetCount<string>(), Is.Zero);
 		}
 
 		[Test, TestCase(0), TestCase(1), TestCase(2), TestCase(5), TestCase(10)]
@@ -97,7 +96,7 @@ namespace DELTation.Entities.Tests.Editor
 			var newCount = _tags.GetCount<string>();
 
 			// Assert
-			newCount.Should().Be(Mathf.Max(initialCount - removal, 0));
+			Assert.That(newCount, Is.EqualTo(Mathf.Max(initialCount - removal, 0)));
 		}
 
 		[Test, TestCase(0), TestCase(1), TestCase(2), TestCase(5), TestCase(10)]
@@ -110,8 +109,8 @@ namespace DELTation.Entities.Tests.Editor
 			_tags.RemoveAll<string>();
 
 			// Assert
-			_tags.GetCount<string>().Should().Be(0);
-			_tags.Contains<string>().Should().BeFalse();
+			Assert.That(_tags.GetCount<string>(), Is.EqualTo(0));
+			Assert.That(_tags.Contains<string>(), Is.False);
 		}
 
 		[Test]
@@ -125,10 +124,10 @@ namespace DELTation.Entities.Tests.Editor
 			_tags.Clear();
 
 			// Assert
-			_tags.GetCount<string>().Should().Be(0);
-			_tags.GetCount<int>().Should().Be(0);
-			_tags.Contains<string>().Should().BeFalse();
-			_tags.Contains<int>().Should().BeFalse();
+			Assert.That(_tags.GetCount<string>(), Is.EqualTo(0));
+			Assert.That(_tags.GetCount<int>(), Is.EqualTo(0));
+			Assert.That(_tags.Contains<string>(), Is.False);
+			Assert.That(_tags.Contains<int>(), Is.False);
 		}
 
 		[Test, TestCase(-1), TestCase(-2), TestCase(-15)]
@@ -139,9 +138,7 @@ namespace DELTation.Entities.Tests.Editor
 			// Act
 
 			// Assert
-			_tags.Invoking(t => t.AddMany<string>(number))
-				.Should()
-				.Throw<ArgumentOutOfRangeException>();
+			Assert.That(() => _tags.AddMany<string>(number), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 
 		[Test, TestCase(-1), TestCase(-2), TestCase(-15)]
@@ -152,9 +149,7 @@ namespace DELTation.Entities.Tests.Editor
 			// Act
 
 			// Assert
-			_tags.Invoking(t => t.RemoveMany<string>(number))
-				.Should()
-				.Throw<ArgumentOutOfRangeException>();
+			Assert.That(() => _tags.RemoveMany<string>(number), Throws.InstanceOf<ArgumentOutOfRangeException>());
 		}
 	}
 }

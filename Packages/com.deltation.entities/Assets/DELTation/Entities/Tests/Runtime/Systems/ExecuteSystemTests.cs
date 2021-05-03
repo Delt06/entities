@@ -1,7 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using NSubstitute;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime.Systems
@@ -17,9 +14,7 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 			// Act
 
 			// Assert
-			executeSystem.Invoking(s => s.Execute(null, 0f))
-				.Should()
-				.Throw<ArgumentNullException>();
+			Assert.That(() => executeSystem.Execute(null, 0f), Throws.ArgumentNullException);
 		}
 
 		[Test]
@@ -27,13 +22,13 @@ namespace DELTation.Entities.Tests.Runtime.Systems
 		{
 			// Arrange
 			var executeSystem = new GameObject().AddComponent<EmptyExecuteSystemComponent>();
-			var entity = Substitute.For<IEntity>();
+			var entity = executeSystem.gameObject.AddComponent<CachedEntity>();
 
 			// Act
 			executeSystem.Execute(entity, 0f);
 
 			// Assert
-			executeSystem.ExecutedTimes.Should().Be(1);
+			Assert.That(executeSystem.ExecutedTimes, Is.EqualTo(1));
 		}
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using FluentAssertions;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UnityEngine;
 
 namespace DELTation.Entities.Tests.Runtime.Ids
@@ -32,9 +30,7 @@ namespace DELTation.Entities.Tests.Runtime.Ids
 			// Act
 
 			// Assert
-			id.Invoking(i => i.Entity)
-				.Should()
-				.Throw<InvalidOperationException>();
+			Assert.That(() => id.Entity, Throws.InvalidOperationException);
 		}
 	}
 }
