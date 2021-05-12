@@ -1,4 +1,4 @@
-﻿namespace DELTation.Entities.Systems.Init
+namespace DELTation.Entities.Systems.Init
 {
     public abstract class InitSystemBase : IInitSystem
     {

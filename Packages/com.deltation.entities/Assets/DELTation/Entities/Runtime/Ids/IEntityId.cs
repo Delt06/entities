@@ -1,4 +1,4 @@
-﻿namespace DELTation.Entities.Ids
+namespace DELTation.Entities.Ids
 {
     public interface IEntityId
     {

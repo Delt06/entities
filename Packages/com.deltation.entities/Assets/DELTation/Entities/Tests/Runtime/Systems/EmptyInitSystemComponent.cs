@@ -1,4 +1,4 @@
-﻿using DELTation.Entities.Systems.Init;
+using DELTation.Entities.Systems.Init;
 
 namespace DELTation.Entities.Tests.Runtime.Systems
 {

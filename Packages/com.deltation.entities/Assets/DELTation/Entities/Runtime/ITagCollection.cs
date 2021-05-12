@@ -1,4 +1,4 @@
-﻿namespace DELTation.Entities
+namespace DELTation.Entities
 {
     public interface ITagCollection
     {

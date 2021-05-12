@@ -1,4 +1,4 @@
-﻿using DELTation.Entities.Ids;
+using DELTation.Entities.Ids;
 
 namespace DELTation.Entities.Tests.Runtime.Ids
 {

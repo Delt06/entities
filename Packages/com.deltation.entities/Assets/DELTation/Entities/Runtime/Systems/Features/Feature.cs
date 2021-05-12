@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using DELTation.Entities.Systems.Execute;
 using DELTation.Entities.Systems.Init;

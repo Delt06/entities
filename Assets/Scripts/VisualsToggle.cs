@@ -1,4 +1,4 @@
-﻿using DELTation.Entities;
+using DELTation.Entities;
 using UnityEngine;
 
 [RequireComponent(typeof(IEntity))]
