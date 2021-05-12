@@ -1,7 +1,7 @@
 ﻿namespace DELTation.Entities.Ids
 {
-	public interface IEntityId
-	{
-		IEntity Entity { get; }
-	}
+    public interface IEntityId
+    {
+        IEntity Entity { get; }
+    }
 }

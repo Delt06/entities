@@ -2,8 +2,8 @@
 
 namespace DELTation.Entities.Systems.Execute
 {
-	public interface IFixedUpdateSystem : IExecuteSystem
-	{
-		new void Execute([NotNull] IEntity entity, float deltaTime);
-	}
+    public interface IFixedUpdateSystem : IExecuteSystem
+    {
+        new void Execute([NotNull] IEntity entity, float deltaTime);
+    }
 }

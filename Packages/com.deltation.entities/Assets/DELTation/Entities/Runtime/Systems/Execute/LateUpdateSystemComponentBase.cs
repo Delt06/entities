@@ -1,4 +1,4 @@
 ﻿namespace DELTation.Entities.Systems.Execute
 {
-	public abstract class LateUpdateSystemComponentBase : ExecuteSystemComponentBase, ILateUpdateSystem { }
+    public abstract class LateUpdateSystemComponentBase : ExecuteSystemComponentBase, ILateUpdateSystem { }
 }

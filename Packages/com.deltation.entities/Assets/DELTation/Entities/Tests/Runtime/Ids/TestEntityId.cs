@@ -2,5 +2,5 @@
 
 namespace DELTation.Entities.Tests.Runtime.Ids
 {
-	internal sealed class TestEntityId : EntityIdBase { }
+    internal sealed class TestEntityId : EntityIdBase { }
 }
