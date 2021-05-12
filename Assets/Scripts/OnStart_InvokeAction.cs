@@ -1,4 +1,4 @@
-﻿using DELTation.Entities;
+using DELTation.Entities;
 using DELTation.Entities.Actions;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-﻿# Entities
+# Entities
 
 A library that allows to query components efficiently.
 

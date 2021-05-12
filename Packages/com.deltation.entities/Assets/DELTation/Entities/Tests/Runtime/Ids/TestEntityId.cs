@@ -1,6 +1,6 @@
-﻿using DELTation.Entities.Ids;
+using DELTation.Entities.Ids;
 
 namespace DELTation.Entities.Tests.Runtime.Ids
 {
-	internal sealed class TestEntityId : EntityIdBase { }
+    internal sealed class TestEntityId : EntityIdBase { }
 }
